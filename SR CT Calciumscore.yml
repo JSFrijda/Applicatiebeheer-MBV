@@ -1,0 +1,271 @@
+Metadata:
+  lang: nl
+  title: SR CT calciumscore
+  description: ECG-getriggerde CT met calciumscoreberekening en automatische CAC-DRS
+  versionMajor: 1
+  versionMinor: 1
+  reportVersion: v1
+
+ReportOutput:
+  - text: "{reportSummary}"
+
+Components:
+# =========================================
+# ALGEMEEN
+# =========================================
+- Header:
+    header: Algemeen
+    level: h4
+
+- HR: {}
+
+- Row:
+    label: Hartfrequentie
+    components:
+    - Number:
+        id: Hartfrequentie
+        enforceValueRange: loose
+        minValue: 30
+        maxValue: 220
+
+- Row:
+    label: Ritme
+    components:
+    - Text:
+        id: Ritme
+        placeholder: 'Bijvoorbeeld sinusritme of atriumfibrileren'
+
+- Row:
+    label: Kwaliteit onderzoek
+    components:
+    - Option:
+        id: kwaliteit
+        options: [Goed, Matig, Slecht]
+
+- Row:
+    label: Vrije tekst over kwaliteit
+    components:
+    - Text:
+        id: kwaliteit_vrij
+
+# =========================================
+# CALCIUMSCORE
+# =========================================
+- ComponentGroup:
+    id: Calciumscore
+    borderBottom: true
+    components:
+    - Header:
+        header: Calciumscore
+        level: h4
+
+- Row:
+    label: 'Calciumscore:'
+    components:
+    - Number:
+        id: CACS_Score
+        minValue: 0
+
+- Row:
+    label: 'Percentiel:'
+    components:
+    - Number:
+        id: CACS_Percentiel
+        minValue: 0
+        maxValue: 100
+
+- Row:
+    label: 'Hoofdstam:'
+    components:
+    - Number:
+        id: CACS_Hoofdstam
+        minValue: 0
+        value: 0
+
+- Row:
+    label: 'LAD:'
+    components:
+    - Number:
+        id: CACS_LAD
+        minValue: 0
+        value: 0
+
+- Row:
+    label: 'LCX:'
+    components:
+    - Number:
+        id: CACS_LCX
+        minValue: 0
+        value: 0
+
+- Row:
+    label: 'RCA:'
+    components:
+    - Number:
+        id: CACS_RCA
+        minValue: 0
+        value: 0
+
+# Verborgen vlag die door JavaScript op "Ja" wordt gezet
+# als totale calciumscore en vatsom niet overeenkomen.
+- Text:
+    id: CACS_Mismatch
+    hidden: true
+
+# Zichtbare waarschuwing bij een mismatch.
+- Header:
+    display: Eq(CACS_Mismatch,'Ja')
+    header: 'WAARSCHUWING: calciumscore en vatscores komen niet overeen'
+    level: h4
+
+- Row:
+    label: Controle calciumscore
+    display: Eq(CACS_Mismatch,'Ja')
+    components:
+    - Text:
+        id: CACS_Controle
+
+# Wordt alleen "Ja" als:
+# CACS_Score = hoofdstam + LAD + LCX + RCA
+- Text:
+    id: CACS_Validatie_OK
+    hidden: true
+
+- Text:
+    id: CACS_Output
+    hidden: true
+
+- Text:
+    id: CACS_Conclusie
+    hidden: true
+
+- Text:
+    id: CAC_DRS_Output
+    hidden: true
+
+# =========================================
+# INVULLEN DOOR NUCLEAIR GENEESKUNDIGE
+# =========================================
+- Header:
+    header: Invullen door nucleair geneeskundige
+    level: h4
+
+- HR: {}
+
+- Row:
+    label: Nevenbevindingen
+    components:
+    - Text:
+        id: Nevenbevindingen
+        value: Geen
+
+- Row:
+    label: Vrije tekst conclusie
+    components:
+    - Text:
+        id: Conclusie_Vrij
+
+- Row:
+    label: Aangevraagd door
+    components:
+    - Option:
+        id: Aanvrager_Type
+        mandatory: prohibit
+        options: [Huisarts, Specialist]
+
+- Text:
+    id: ExamDescription
+    dataarg: SectraIds7.ExamDescription
+    hidden: true
+
+- Text:
+    id: ExamDescription_Verwerkt
+    hidden: true
+
+# Vervolgbeleid wordt pas zichtbaar wanneer de calciumscorecontrole klopt.
+- Row:
+    label: Aanvullend onderzoek/verwijzing nodig
+    display: And(Eq(CACS_Validatie_OK,'Ja'),Or(Eq(Aanvrager_Type,'Huisarts'),Eq(Aanvrager_Type,'Specialist')))
+    components:
+    - Option:
+        id: Aanvullend_Nodig
+        options: [Ja, Nee]
+
+- Row:
+    label: Aanvullend onderzoek/verwijzing
+    display: And(Eq(CACS_Validatie_OK,'Ja'),Eq(Aanvrager_Type,'Huisarts'),Eq(Aanvullend_Nodig,'Ja'))
+    components:
+    - Option:
+        id: Aanvullend_Huisarts
+        options: [CTA coronairen, Verwijzing poli cardiologie]
+
+- Row:
+    label: Aanvullend onderzoek
+    display: And(Eq(CACS_Validatie_OK,'Ja'),Eq(Aanvrager_Type,'Specialist'),Eq(Aanvullend_Nodig,'Ja'))
+    components:
+    - Option:
+        id: Aanvullend_Specialist
+        options: [CTA coronairen, Rb-PET]
+
+- Header:
+    display: And(Eq(CACS_Validatie_OK,'Ja'),Eq(Aanvullend_Nodig,'Ja'))
+    header: 'LET OP: maak voor het aanvullend onderzoek de juiste orders aan in HiX!'
+    level: h4
+
+- Text:
+    id: Aanvullend_Output
+    hidden: true
+
+- Text:
+    id: Aanvullend_Protocol_Sleutel
+    hidden: true
+
+- Text:
+    id: Metoprolol_Output
+    hidden: true
+
+- Row:
+    label: Mede beoordeeld door cardioloog
+    components:
+    - Option:
+        id: Beoordeeld_Cardioloog
+        options: [Ja, Nee]
+
+- Row:
+    label: 'Cardioloog:'
+    display: Eq(Beoordeeld_Cardioloog,'Ja')
+    components:
+    - Dropdown:
+        id: Dropdown_Cardioloog
+        placeholder: Kies cardioloog
+        options: [Mouden, Veldhorst, Yokota, Timmer, Riezebos, Anders]
+
+- Row:
+    label: 'Naam cardioloog:'
+    display: And(Eq(Beoordeeld_Cardioloog,'Ja'),Eq(Dropdown_Cardioloog,'Anders'))
+    components:
+    - Text:
+        id: Naam_Cardioloog
+        mandatory: prohibit
+
+- Text:
+    id: Cardioloog_Output
+    hidden: true
+    value: '=If(And(Eq(Beoordeeld_Cardioloog,"Ja"),IsNotEmpty(Dropdown_Cardioloog),Or(NotEq(Dropdown_Cardioloog,"Anders"),IsNotEmpty(Naam_Cardioloog))),Concat("Medebeoordeeld door collega ",If(Eq(Dropdown_Cardioloog,"Anders"),Naam_Cardioloog,Dropdown_Cardioloog),", cardioloog."),"")'
+
+# =========================================
+# VERSLAGOUTPUT
+# =========================================
+- Summary:
+    id: reportSummary
+    display: true
+    editable: true
+    reportTemplate:
+    - text: |
+        {IfNotEmpty(Hartfrequentie,Concat("<b>Uitvoering:</b> ECG getriggerde CT met calciumscore berekening. Hartfrequentie: ",Hartfrequentie," slagen per minuut.",IfNotEmpty(Ritme,Concat(" ",Ritme,"."),"")),"")}
+
+        {If(Or(IsNotEmpty(kwaliteit),IsNotEmpty(kwaliteit_vrij),IsNotEmpty(CACS_Output)),Concat("<b>Bevindingen:</b><br>",IfNotEmpty(kwaliteit,Concat("Onderzoek van ",If(Eq(kwaliteit,"Goed"),"goede",If(Eq(kwaliteit,"Matig"),"matige","slechte"))," kwaliteit."),""),IfNotEmpty(kwaliteit_vrij,Concat(If(IsNotEmpty(kwaliteit)," ",""),kwaliteit_vrij,"."),""),IfNotEmpty(CACS_Output,Concat(If(Or(IsNotEmpty(kwaliteit),IsNotEmpty(kwaliteit_vrij)),"<br>",""),CACS_Output),"")),"")}
+
+        {IfNotEmpty(Nevenbevindingen,Concat("Nevenbevindingen: ",Nevenbevindingen,"."),"")}
+
+        {If(Or(IsNotEmpty(CACS_Conclusie),IsNotEmpty(Conclusie_Vrij),IsNotEmpty(CAC_DRS_Output),IsNotEmpty(Cardioloog_Output),IsNotEmpty(Aanvullend_Output),IsNotEmpty(Metoprolol_Output)),Concat("<b>Conclusie:</b><br>",CACS_Conclusie,IfNotEmpty(Conclusie_Vrij,Concat(If(IsNotEmpty(CACS_Conclusie)," ",""),Conclusie_Vrij,"."),""),IfNotEmpty(CAC_DRS_Output,Concat("<br>",CAC_DRS_Output,"."),""),If(Or(IsNotEmpty(Aanvullend_Output),IsNotEmpty(Metoprolol_Output)),Concat("<br><br>",Aanvullend_Output,If(And(IsNotEmpty(Aanvullend_Output),IsNotEmpty(Metoprolol_Output))," ",""),Metoprolol_Output),""),IfNotEmpty(Cardioloog_Output,Concat("<br><br>",Cardioloog_Output),"")),"")}
