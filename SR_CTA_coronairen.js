@@ -76,7 +76,7 @@ EventHandler.OnStateChange = function(get, set, extensions) {
             " en " + items[items.length - 1];
     }
 
-    function add(vat, segment, stenose) {
+    function add(vat, segment, stenose, systeem) {
         let score = stenoseScore(stenose);
 
         if (score === 0) return;
@@ -84,11 +84,12 @@ EventHandler.OnStateChange = function(get, set, extensions) {
         afwijkingen.push({
             vat: vat,
             segment: segment || "",
-            score: score
+            score: score,
+            systeem: systeem || ""
         });
     }
 
-    function verwerkVat(componentId, label, naamComponentId) {
+    function verwerkVat(componentId, label, naamComponentId, systeem) {
         let normaal = get('Normaal_' + componentId, 'value');
         let vatNaam = naamComponentId
             ? get(naamComponentId, 'value')
@@ -124,14 +125,14 @@ EventHandler.OnStateChange = function(get, set, extensions) {
 
             if (stenose && plaque) {
                 invoerCompleet = true;
-                add(vatNaam, segment, stenose);
+                add(vatNaam, segment, stenose, systeem);
             }
         });
     }
 
     function verwerkSysteem(vaten) {
         vaten.forEach(function(vat) {
-            verwerkVat(vat[0], vat[1], vat[2]);
+            verwerkVat(vat[0], vat[1], vat[2], vat[3]);
         });
     }
 
@@ -318,59 +319,59 @@ EventHandler.OnStateChange = function(get, set, extensions) {
     let calciumStatus = updateCalciumscore();
 
     let linksVaten = [
-        ["Hoofdstam_Links", "Hoofdstam", null],
-        ["LAD_Links", "LAD", null],
-        ["D1_Links", "D1", null],
-        ["D2_Links", "D2", null],
-        ["LAD_Extra_Vat1_Links", "", "Naam_LAD_Extra_Vat1_Links"],
-        ["LAD_Extra_Vat2_Links", "", "Naam_LAD_Extra_Vat2_Links"],
-        ["LAD_Extra_Vat3_Links", "", "Naam_LAD_Extra_Vat3_Links"],
-        ["LAD_Extra_Vat4_Links", "", "Naam_LAD_Extra_Vat4_Links"],
-        ["LAD_Extra_Vat5_Links", "", "Naam_LAD_Extra_Vat5_Links"],
-        ["LCX_Links", "LCX", null],
-        ["L_PLB_Links", "L PLB", null],
-        ["L_PDA_Links", "L PDA", null],
-        ["MO1_Links", "MO1", null],
-        ["MO2_Links", "MO2", null],
-        ["LCX_Extra_Vat1_Links", "", "Naam_LCX_Extra_Vat1_Links"],
-        ["LCX_Extra_Vat2_Links", "", "Naam_LCX_Extra_Vat2_Links"],
-        ["LCX_Extra_Vat3_Links", "", "Naam_LCX_Extra_Vat3_Links"],
-        ["LCX_Extra_Vat4_Links", "", "Naam_LCX_Extra_Vat4_Links"],
-        ["LCX_Extra_Vat5_Links", "", "Naam_LCX_Extra_Vat5_Links"],
-        ["RCA_Links", "RCA", null],
-        ["RCA_Extra_Vat1_Links", "", "Naam_RCA_Extra_Vat1_Links"],
-        ["RCA_Extra_Vat2_Links", "", "Naam_RCA_Extra_Vat2_Links"],
-        ["RCA_Extra_Vat3_Links", "", "Naam_RCA_Extra_Vat3_Links"],
-        ["RCA_Extra_Vat4_Links", "", "Naam_RCA_Extra_Vat4_Links"],
-        ["RCA_Extra_Vat5_Links", "", "Naam_RCA_Extra_Vat5_Links"]
+        ["Hoofdstam_Links", "Hoofdstam", null, "Hoofdstam"],
+        ["LAD_Links", "LAD", null, "LAD"],
+        ["D1_Links", "D1", null, "LAD"],
+        ["D2_Links", "D2", null, "LAD"],
+        ["LAD_Extra_Vat1_Links", "", "Naam_LAD_Extra_Vat1_Links", "LAD"],
+        ["LAD_Extra_Vat2_Links", "", "Naam_LAD_Extra_Vat2_Links", "LAD"],
+        ["LAD_Extra_Vat3_Links", "", "Naam_LAD_Extra_Vat3_Links", "LAD"],
+        ["LAD_Extra_Vat4_Links", "", "Naam_LAD_Extra_Vat4_Links", "LAD"],
+        ["LAD_Extra_Vat5_Links", "", "Naam_LAD_Extra_Vat5_Links", "LAD"],
+        ["LCX_Links", "LCX", null, "LCX"],
+        ["L_PLB_Links", "L PLB", null, "LCX"],
+        ["L_PDA_Links", "L PDA", null, "LCX"],
+        ["MO1_Links", "MO1", null, "LCX"],
+        ["MO2_Links", "MO2", null, "LCX"],
+        ["LCX_Extra_Vat1_Links", "", "Naam_LCX_Extra_Vat1_Links", "LCX"],
+        ["LCX_Extra_Vat2_Links", "", "Naam_LCX_Extra_Vat2_Links", "LCX"],
+        ["LCX_Extra_Vat3_Links", "", "Naam_LCX_Extra_Vat3_Links", "LCX"],
+        ["LCX_Extra_Vat4_Links", "", "Naam_LCX_Extra_Vat4_Links", "LCX"],
+        ["LCX_Extra_Vat5_Links", "", "Naam_LCX_Extra_Vat5_Links", "LCX"],
+        ["RCA_Links", "RCA", null, "RCA"],
+        ["RCA_Extra_Vat1_Links", "", "Naam_RCA_Extra_Vat1_Links", "RCA"],
+        ["RCA_Extra_Vat2_Links", "", "Naam_RCA_Extra_Vat2_Links", "RCA"],
+        ["RCA_Extra_Vat3_Links", "", "Naam_RCA_Extra_Vat3_Links", "RCA"],
+        ["RCA_Extra_Vat4_Links", "", "Naam_RCA_Extra_Vat4_Links", "RCA"],
+        ["RCA_Extra_Vat5_Links", "", "Naam_RCA_Extra_Vat5_Links", "RCA"]
     ];
 
     let rechtsVaten = [
-        ["Hoofdstam_Rechts", "Hoofdstam", null],
-        ["LAD_Rechts", "LAD", null],
-        ["D1_Rechts", "D1", null],
-        ["D2_Rechts", "D2", null],
-        ["LAD_Extra_Vat1_Rechts", "", "Naam_LAD_Extra_Vat1_Rechts"],
-        ["LAD_Extra_Vat2_Rechts", "", "Naam_LAD_Extra_Vat2_Rechts"],
-        ["LAD_Extra_Vat3_Rechts", "", "Naam_LAD_Extra_Vat3_Rechts"],
-        ["LAD_Extra_Vat4_Rechts", "", "Naam_LAD_Extra_Vat4_Rechts"],
-        ["LAD_Extra_Vat5_Rechts", "", "Naam_LAD_Extra_Vat5_Rechts"],
-        ["LCX_Rechts", "LCX", null],
-        ["MO1_Rechts", "MO1", null],
-        ["MO2_Rechts", "MO2", null],
-        ["LCX_Extra_Vat1_Rechts", "", "Naam_LCX_Extra_Vat1_Rechts"],
-        ["LCX_Extra_Vat2_Rechts", "", "Naam_LCX_Extra_Vat2_Rechts"],
-        ["LCX_Extra_Vat3_Rechts", "", "Naam_LCX_Extra_Vat3_Rechts"],
-        ["LCX_Extra_Vat4_Rechts", "", "Naam_LCX_Extra_Vat4_Rechts"],
-        ["LCX_Extra_Vat5_Rechts", "", "Naam_LCX_Extra_Vat5_Rechts"],
-        ["RCA_Rechts", "RCA", null],
-        ["PDA_Rechts", "PDA", null],
-        ["PLB_Rechts", "PLB", null],
-        ["RCA_Extra_Vat1_Rechts", "", "Naam_RCA_Extra_Vat1_Rechts"],
-        ["RCA_Extra_Vat2_Rechts", "", "Naam_RCA_Extra_Vat2_Rechts"],
-        ["RCA_Extra_Vat3_Rechts", "", "Naam_RCA_Extra_Vat3_Rechts"],
-        ["RCA_Extra_Vat4_Rechts", "", "Naam_RCA_Extra_Vat4_Rechts"],
-        ["RCA_Extra_Vat5_Rechts", "", "Naam_RCA_Extra_Vat5_Rechts"]
+        ["Hoofdstam_Rechts", "Hoofdstam", null, "Hoofdstam"],
+        ["LAD_Rechts", "LAD", null, "LAD"],
+        ["D1_Rechts", "D1", null, "LAD"],
+        ["D2_Rechts", "D2", null, "LAD"],
+        ["LAD_Extra_Vat1_Rechts", "", "Naam_LAD_Extra_Vat1_Rechts", "LAD"],
+        ["LAD_Extra_Vat2_Rechts", "", "Naam_LAD_Extra_Vat2_Rechts", "LAD"],
+        ["LAD_Extra_Vat3_Rechts", "", "Naam_LAD_Extra_Vat3_Rechts", "LAD"],
+        ["LAD_Extra_Vat4_Rechts", "", "Naam_LAD_Extra_Vat4_Rechts", "LAD"],
+        ["LAD_Extra_Vat5_Rechts", "", "Naam_LAD_Extra_Vat5_Rechts", "LAD"],
+        ["LCX_Rechts", "LCX", null, "LCX"],
+        ["MO1_Rechts", "MO1", null, "LCX"],
+        ["MO2_Rechts", "MO2", null, "LCX"],
+        ["LCX_Extra_Vat1_Rechts", "", "Naam_LCX_Extra_Vat1_Rechts", "LCX"],
+        ["LCX_Extra_Vat2_Rechts", "", "Naam_LCX_Extra_Vat2_Rechts", "LCX"],
+        ["LCX_Extra_Vat3_Rechts", "", "Naam_LCX_Extra_Vat3_Rechts", "LCX"],
+        ["LCX_Extra_Vat4_Rechts", "", "Naam_LCX_Extra_Vat4_Rechts", "LCX"],
+        ["LCX_Extra_Vat5_Rechts", "", "Naam_LCX_Extra_Vat5_Rechts", "LCX"],
+        ["RCA_Rechts", "RCA", null, "RCA"],
+        ["PDA_Rechts", "PDA", null, "RCA"],
+        ["PLB_Rechts", "PLB", null, "RCA"],
+        ["RCA_Extra_Vat1_Rechts", "", "Naam_RCA_Extra_Vat1_Rechts", "RCA"],
+        ["RCA_Extra_Vat2_Rechts", "", "Naam_RCA_Extra_Vat2_Rechts", "RCA"],
+        ["RCA_Extra_Vat3_Rechts", "", "Naam_RCA_Extra_Vat3_Rechts", "RCA"],
+        ["RCA_Extra_Vat4_Rechts", "", "Naam_RCA_Extra_Vat4_Rechts", "RCA"],
+        ["RCA_Extra_Vat5_Rechts", "", "Naam_RCA_Extra_Vat5_Rechts", "RCA"]
     ];
 
     let dominantie = get('dominantie', 'value');
@@ -421,10 +422,10 @@ EventHandler.OnStateChange = function(get, set, extensions) {
         }
 
         if (
-            ["LAD", "LCX", "RCA"].includes(afwijking.vat) &&
+            ["LAD", "LCX", "RCA"].includes(afwijking.systeem) &&
             afwijking.score >= 4
         ) {
-            severeVessels.add(afwijking.vat);
+            severeVessels.add(afwijking.systeem);
         }
     });
 
