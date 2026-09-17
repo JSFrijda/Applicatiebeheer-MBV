@@ -438,7 +438,9 @@ EventHandler.OnStateChange = function(get, set, extensions) {
     } else if (hoogste === 2) {
         cadrads = "CAD-RADS: 2";
     } else if (hoogste === 3) {
-        cadrads = "CAD-RADS: 3";
+        // Een hoofdstamstenose van 50% of meer geldt volgens CAD-RADS als 4B,
+        // ook zonder 70-99% stenose elders.
+        cadrads = lmSevere ? "CAD-RADS: 4B" : "CAD-RADS: 3";
     } else if (hoogste === 5) {
         cadrads = "CAD-RADS: 5";
     } else if (hoogste === 4) {
