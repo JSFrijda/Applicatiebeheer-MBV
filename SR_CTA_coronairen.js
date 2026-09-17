@@ -431,9 +431,8 @@ EventHandler.OnStateChange = function(get, set, extensions) {
 
     let cadrads = "";
 
-    if (hoogste === 0) {
-        cadrads = "CAD-RADS: 0";
-    } else if (hoogste === 1) {
+    // Zonder afwijkingen blijft hoogste 0; die uitvoer wordt verderop gezet.
+    if (hoogste === 1) {
         cadrads = "CAD-RADS: 1";
     } else if (hoogste === 2) {
         cadrads = "CAD-RADS: 2";
