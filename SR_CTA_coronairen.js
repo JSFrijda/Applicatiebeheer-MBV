@@ -307,16 +307,11 @@ EventHandler.OnStateChange = function(get, set, extensions) {
                     ? "CAC-DRS: " + aScore + "/N" + aantalVaten
                     : ""
         );
-
-        return {
-            score: calciumscore,
-            invoerGeldig: invoerGeldig
-        };
     }
 
     // De calciumvalidatie draait voor CAD-RADS, zodat ook bij nog
     // onvolledige CTA-invoer de waarschuwing direct zichtbaar wordt.
-    let calciumStatus = updateCalciumscore();
+    updateCalciumscore();
 
     let linksVaten = [
         ["Hoofdstam_Links", "Hoofdstam", null, "Hoofdstam"],
@@ -520,18 +515,8 @@ EventHandler.OnStateChange = function(get, set, extensions) {
     //-------------------------------------------------------------------------------
 
     if (afwijkingen.length === 0) {
-        let calciumscoreNul =
-            calciumStatus.invoerGeldig &&
-            calciumStatus.score === 0;
-
         set('CADRADS_output', 'value', "CAD-RADS: 0");
-        set(
-            'CADRADS_verslag',
-            'value',
-            calciumscoreNul
-                ? "Geen obstructief coronairlijden."
-                : "Geen significant obstructief coronairlijden."
-        );
+        set('CADRADS_verslag', 'value', "Geen obstructief coronairlijden.");
     } else {
         set('CADRADS_output', 'value', cadrads);
         set('CADRADS_verslag', 'value', verslag);
