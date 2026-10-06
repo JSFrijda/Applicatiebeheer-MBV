@@ -75,15 +75,20 @@ function invoer() {
 
 const regels = [
     // CAD-RADS-categorie volgt de zwaarste stenose.
+    // Bij categorie 0 is er geen plaque, dus vervalt het woord "significant";
+    // bij 1 en 2 is er wel plaque en blijft het staan.
     ['geen afwijkingen',
         invoer({ Normaal_Hoofdstam_Links: 'Ja', Normaal_LAD_Links: 'Ja' }),
-        { CADRADS_output: 'CAD-RADS: 0' }],
+        { CADRADS_output: 'CAD-RADS: 0',
+          CADRADS_verslag: 'Geen obstructief coronairlijden.' }],
     ['LAD <25%',
         invoer(vat('LAD_Links', 'Proximaal', '<25%', 'Calcified')),
-        { CADRADS_output: 'CAD-RADS: 1' }],
+        { CADRADS_output: 'CAD-RADS: 1',
+          CADRADS_verslag: 'Geen significant obstructief coronairlijden.' }],
     ['LAD 25-49%',
         invoer(vat('LAD_Links', 'Proximaal', '25-49%', 'Calcified')),
-        { CADRADS_output: 'CAD-RADS: 2' }],
+        { CADRADS_output: 'CAD-RADS: 2',
+          CADRADS_verslag: 'Geen significant obstructief coronairlijden.' }],
     ['LAD 50-69%',
         invoer(vat('LAD_Links', 'Proximaal', '50-69%', 'Calcified')),
         { CADRADS_output: 'CAD-RADS: 3' }],
