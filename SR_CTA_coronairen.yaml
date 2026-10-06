@@ -6351,56 +6351,6 @@ Components:
           {If(Or(Eq(dominantie,"Rechts dominant"),Eq(dominantie,"Co-dominant")),If(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output),IsNotEmpty(LCX_Extra_Vat1_Rechts_output),IsNotEmpty(LCX_Extra_Vat2_Rechts_output),IsNotEmpty(LCX_Extra_Vat3_Rechts_output),IsNotEmpty(LCX_Extra_Vat4_Rechts_output),IsNotEmpty(LCX_Extra_Vat5_Rechts_output)),Concat("LCX: ",LCX_Rechts_output,If(And(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output))," ",""),MO1_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output)),IsNotEmpty(MO2_Rechts_output))," ",""),MO2_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output)),IsNotEmpty(LCX_Extra_Vat1_Rechts_output))," ",""),LCX_Extra_Vat1_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output),IsNotEmpty(LCX_Extra_Vat1_Rechts_output)),IsNotEmpty(LCX_Extra_Vat2_Rechts_output))," ",""),LCX_Extra_Vat2_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output),IsNotEmpty(LCX_Extra_Vat1_Rechts_output),IsNotEmpty(LCX_Extra_Vat2_Rechts_output)),IsNotEmpty(LCX_Extra_Vat3_Rechts_output))," ",""),LCX_Extra_Vat3_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output),IsNotEmpty(LCX_Extra_Vat1_Rechts_output),IsNotEmpty(LCX_Extra_Vat2_Rechts_output),IsNotEmpty(LCX_Extra_Vat3_Rechts_output)),IsNotEmpty(LCX_Extra_Vat4_Rechts_output))," ",""),LCX_Extra_Vat4_Rechts_output,If(And(Or(IsNotEmpty(LCX_Rechts_output),IsNotEmpty(MO1_Rechts_output),IsNotEmpty(MO2_Rechts_output),IsNotEmpty(LCX_Extra_Vat1_Rechts_output),IsNotEmpty(LCX_Extra_Vat2_Rechts_output),IsNotEmpty(LCX_Extra_Vat3_Rechts_output),IsNotEmpty(LCX_Extra_Vat4_Rechts_output)),IsNotEmpty(LCX_Extra_Vat5_Rechts_output))," ",""),LCX_Extra_Vat5_Rechts_output),""),"")}
           {If(Or(Eq(dominantie,"Rechts dominant"),Eq(dominantie,"Co-dominant")),If(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output),IsNotEmpty(RCA_Extra_Vat1_Rechts_output),IsNotEmpty(RCA_Extra_Vat2_Rechts_output),IsNotEmpty(RCA_Extra_Vat3_Rechts_output),IsNotEmpty(RCA_Extra_Vat4_Rechts_output),IsNotEmpty(RCA_Extra_Vat5_Rechts_output)),Concat("RCA: ",RCA_Rechts_output,If(And(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output))," ",""),PDA_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output)),IsNotEmpty(PLB_Rechts_output))," ",""),PLB_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output)),IsNotEmpty(RCA_Extra_Vat1_Rechts_output))," ",""),RCA_Extra_Vat1_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output),IsNotEmpty(RCA_Extra_Vat1_Rechts_output)),IsNotEmpty(RCA_Extra_Vat2_Rechts_output))," ",""),RCA_Extra_Vat2_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output),IsNotEmpty(RCA_Extra_Vat1_Rechts_output),IsNotEmpty(RCA_Extra_Vat2_Rechts_output)),IsNotEmpty(RCA_Extra_Vat3_Rechts_output))," ",""),RCA_Extra_Vat3_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output),IsNotEmpty(RCA_Extra_Vat1_Rechts_output),IsNotEmpty(RCA_Extra_Vat2_Rechts_output),IsNotEmpty(RCA_Extra_Vat3_Rechts_output)),IsNotEmpty(RCA_Extra_Vat4_Rechts_output))," ",""),RCA_Extra_Vat4_Rechts_output,If(And(Or(IsNotEmpty(RCA_Rechts_output),IsNotEmpty(PDA_Rechts_output),IsNotEmpty(PLB_Rechts_output),IsNotEmpty(RCA_Extra_Vat1_Rechts_output),IsNotEmpty(RCA_Extra_Vat2_Rechts_output),IsNotEmpty(RCA_Extra_Vat3_Rechts_output),IsNotEmpty(RCA_Extra_Vat4_Rechts_output)),IsNotEmpty(RCA_Extra_Vat5_Rechts_output))," ",""),RCA_Extra_Vat5_Rechts_output),""),"")}
 
-# Nevenbevindingen, Conclusie en Cardioloog.
-- Header: 
-    level: h4
-    header: Invullen door Nucleair geneeskundige
-    
-- HR: {}    
-    
-    
-- Row:
-    label: 'Nevenbevindingen'
-    components:
-    - Text:
-        id: Nevenbevindingen
-    
-- Row:
-    label: Vrije tekst Conclusie
-    components:
-    - Text:
-        id: Conclusie_Vrij
-    
-- Row:
-    label: Mede beoordeeld door cardioloog
-    components:
-    - Option: 
-        id: Beoordeeld_Cardioloog
-        options: [Ja, Nee]
-       
-- Row:
-    label: 'Cardioloog: '
-    display: Eq(Beoordeeld_Cardioloog, 'Ja')
-    components:
-    - Dropdown: 
-        id: Dropdown_Cardioloog
-        placeholder: Kies cardioloog
-        mandatory: prohibit
-        options: [Mouden, Veldhorst, Yokota, Timmer, Riezebos, Anders]
-    
-- Row:
-    label: 'Naam cardioloog: '
-    display: And(Eq(Beoordeeld_Cardioloog,'Ja'),Eq(Dropdown_Cardioloog,'Anders'))
-    components:
-    - Text:
-        id: Naam_Cardioloog
-        mandatory: prohibit
-    
-- Text:
-      id: Cardioloog_Output
-      hidden: true
-      value: '=If(And(Eq(Beoordeeld_Cardioloog,"Ja"),IsNotEmpty(Dropdown_Cardioloog),Or(NotEq(Dropdown_Cardioloog,"Anders"),IsNotEmpty(Naam_Cardioloog))),Concat("Medebeoordeeld door collega ",If(Eq(Dropdown_Cardioloog,"Anders"),Naam_Cardioloog,Dropdown_Cardioloog),", cardioloog."),"")'
-
 # =========================================
 # CALCIUMSCORE
 # =========================================
@@ -6502,6 +6452,56 @@ Components:
     id: CAC_DRS_Output
     hidden: true
     
+# Nevenbevindingen, Conclusie en Cardioloog.
+- Header: 
+    level: h4
+    header: Invullen door Nucleair geneeskundige
+    
+- HR: {}    
+    
+    
+- Row:
+    label: 'Nevenbevindingen'
+    components:
+    - Text:
+        id: Nevenbevindingen
+    
+- Row:
+    label: Vrije tekst Conclusie
+    components:
+    - Text:
+        id: Conclusie_Vrij
+    
+- Row:
+    label: Mede beoordeeld door cardioloog
+    components:
+    - Option: 
+        id: Beoordeeld_Cardioloog
+        options: [Ja, Nee]
+       
+- Row:
+    label: 'Cardioloog: '
+    display: Eq(Beoordeeld_Cardioloog, 'Ja')
+    components:
+    - Dropdown: 
+        id: Dropdown_Cardioloog
+        placeholder: Kies cardioloog
+        mandatory: prohibit
+        options: [Mouden, Veldhorst, Yokota, Timmer, Riezebos, Anders]
+    
+- Row:
+    label: 'Naam cardioloog: '
+    display: And(Eq(Beoordeeld_Cardioloog,'Ja'),Eq(Dropdown_Cardioloog,'Anders'))
+    components:
+    - Text:
+        id: Naam_Cardioloog
+        mandatory: prohibit
+    
+- Text:
+      id: Cardioloog_Output
+      hidden: true
+      value: '=If(And(Eq(Beoordeeld_Cardioloog,"Ja"),IsNotEmpty(Dropdown_Cardioloog),Or(NotEq(Dropdown_Cardioloog,"Anders"),IsNotEmpty(Naam_Cardioloog))),Concat("Medebeoordeeld door collega ",If(Eq(Dropdown_Cardioloog,"Anders"),Naam_Cardioloog,Dropdown_Cardioloog),", cardioloog."),"")'
+
 #CADRADS gedeelte 
 - Text:
     id: CADRADS_output
